@@ -12,4 +12,5 @@
  * @package         Db_Emojis_Auto_Replacer
  */
 
-// Your code starts here.
+require plugin_dir_path(__FILE__) . 'shortcode.php';
+require plugin_dir_path(__FILE__) . 'scripts.php';
