@@ -17,12 +17,11 @@
         $('#btn-to-clipboard').on('click', function() {
             output_text.select();
             var output = output_text.val();
-            //  $(this).removeClass("run-animation").addClass("run-animation");
+            // $(this).removeClass("run-animation").addClass("run-animation");
             var url = rest_api_url + output;
             $.ajax({
                 url: url,
             });
-
             // copy to clipboard withut focus change
             var el = document.createElement('textarea');
             el.value = output;
@@ -33,6 +32,9 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
+            var copy_babble = $('<span></span>').text('Copied');
+            $('.btn-wrapper').append(copy_babble);
+            copy_babble.addClass('copy');
         })
     })
 })(jQuery);
