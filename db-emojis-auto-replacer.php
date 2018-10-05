@@ -14,7 +14,7 @@
 
 require plugin_dir_path(__FILE__) . 'shortcode.php';
 require plugin_dir_path(__FILE__) . 'scripts.php';
-// require plugin_dir_path(__FILE__) . 'admin-page.php';
+require plugin_dir_path(__FILE__) . 'admin-page.php';
 require plugin_dir_path(__FILE__) . 'rest-api.php';
 
 register_activation_hook(__FILE__, 'db_emojis_auto_replacer_activator');
@@ -43,7 +43,8 @@ function db_emojis_auto_replacer_activator()
     ini_set('auto_detect_line_endings', true);
     $handle = fopen($file_name, 'r');
     // $data   = fgetcsv($handle);
-    $row = 1;
+    $row                 = 1;
+    $emojis_insert_query = "INSERT INTO " . $table_name . "(emoji, replacement) VALUES (";
     while (($data = fgetcsv($handle, 1000, ",")) !== false) {
         $replacement = strtolower($data[1]);
 
@@ -51,12 +52,14 @@ function db_emojis_auto_replacer_activator()
         $search_results = $wpdb->get_results($search);
 
         if (count($search_results) === 0) {
-            $insert  = "INSERT INTO " . $table_name . "(emoji, replacement) VALUES ('" . $data[0] . "', '" . $replacement . "')";
-            $results = $wpdb->query($insert);
+            // $insert  = "INSERT INTO " . $table_name . "(emoji, replacement) VALUES ('" . $data[0] . "', '" . $replacement . "')";
+            $emojis_insert_query .= ", ('" . $data[0] . "', '" . $replacement . "')";
         }
 
         $row++;
     }
+    $emojis_insert_query .= "')";
+    $results = $wpdb->query($emojis_insert_query);
     fclose($handle);
     create_folder($table_name);
 }
