@@ -7,8 +7,8 @@
             output_text = $('#output_text');
         var rest_api_url = '/wp-json/db-dmoji-replace/v1/log?log=';
         console.log(window.php_vars);
-
-        var emojis_t = window.php_vars.replacements, emojis_e = window.php_vars.emojis;
+        var emojis_t = window.php_vars.replacements,
+            emojis_e = window.php_vars.emojis;
         $('#typed_text').keyup(function(event) {
             var text = typed_text.val();
             text = text.replaceArray(emojis_t, emojis_e);
@@ -39,20 +39,25 @@
         })
     })
 })(jQuery);
+// var replaceString = this;
+//     // 1. transform string to array
+//     var arr = replaceString.split(' ');
+//     // 2. go to each element of array and try to search is this string to replace
+//     arr.forEach(function(part, index, theArray) {
+//         // to search it create lowercased variable
+//         var lowercased = theArray[index].toLowerCase();
+//         if (find.indexOf(lowercased) != -1) {
+//             var val = replace[find.indexOf(lowercased)];
+//             arr[index] = val;
+//         }
+//     });
+//     // 3. replace string
+//     replaceString = arr.join(' ');
+//     return replaceString;
 String.prototype.replaceArray = function(find, replace) {
-    var replaceString = this;
-    // 1. transform string to array
-    var arr = replaceString.split(' ');
-    // 2. go to each element of array and try to search is this string to replace
-    arr.forEach(function(part, index, theArray) {
-        // to search it create lowercased variable
-        var lowercased = theArray[index].toLowerCase();
-        if (find.indexOf(lowercased) != -1) {
-            var val = replace[find.indexOf(lowercased)];
-            arr[index] = val;
-        }
-    });
-    // 3. replace string
-    replaceString = arr.join(' ');
-    return replaceString;
+  var str = this;
+  for (var i = 0; i < find.length; i++) {
+    str = str.replace(new RegExp("\\b" + find[i] + "\\b", 'i'), replace[i]);
+  }
+  return str.substring(2, str.length);
 }

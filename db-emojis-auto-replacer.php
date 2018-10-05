@@ -14,7 +14,7 @@
 
 require plugin_dir_path(__FILE__) . 'shortcode.php';
 require plugin_dir_path(__FILE__) . 'scripts.php';
-require plugin_dir_path(__FILE__) . 'admin-page.php';
+// require plugin_dir_path(__FILE__) . 'admin-page.php';
 require plugin_dir_path(__FILE__) . 'rest-api.php';
 
 register_activation_hook(__FILE__, 'db_emojis_auto_replacer_activator');
