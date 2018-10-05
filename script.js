@@ -6,8 +6,9 @@
         var typed_text = $('#typed_text'),
             output_text = $('#output_text');
         var rest_api_url = '/wp-json/db-dmoji-replace/v1/log?log=';
-        window.emojis_e = ['😇'];
-        window.emojis_t = ['angel'];
+        console.log(window.php_vars);
+
+        var emojis_t = window.php_vars.replacements, emojis_e = window.php_vars.emojis;
         $('#typed_text').keyup(function(event) {
             var text = typed_text.val();
             text = text.replaceArray(emojis_t, emojis_e);
