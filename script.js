@@ -17,14 +17,22 @@
         $('#btn-to-clipboard').on('click', function() {
             output_text.select();
             var output = output_text.val();
-            console.log(output)
-            document.execCommand('copy');
             //  $(this).removeClass("run-animation").addClass("run-animation");
             var url = rest_api_url + output;
-            console.log('url', typeof url);
             $.ajax({
                 url: url,
             });
+
+            // copy to clipboard withut focus change
+            var el = document.createElement('textarea');
+            el.value = output;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
         })
     })
 })(jQuery);
