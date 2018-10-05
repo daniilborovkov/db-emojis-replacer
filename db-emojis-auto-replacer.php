@@ -14,7 +14,8 @@
 
 require plugin_dir_path(__FILE__) . 'shortcode.php';
 require plugin_dir_path(__FILE__) . 'scripts.php';
-require plugin_dir_path(__FILE__) . 'admin-page.php';
+// require plugin_dir_path(__FILE__) . 'admin-page.php';
+require plugin_dir_path(__FILE__) . 'rest-api.php';
 
 register_activation_hook(__FILE__, 'db_emojis_auto_replacer_activator');
 
@@ -57,4 +58,20 @@ function db_emojis_auto_replacer_activator()
         $row++;
     }
     fclose($handle);
+    create_folder($table_name);
+}
+
+/**
+ * Create folder to write logs
+ * @param  [type] $dir_name [description]
+ * @return [type]           [description]
+ */
+function create_folder()
+{
+    $upload     = wp_upload_dir();
+    $upload_dir = $upload['basedir'];
+    $upload_dir = $upload_dir . '_emojis_log';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0700);
+    }
 }
