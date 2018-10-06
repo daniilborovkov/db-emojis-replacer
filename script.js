@@ -57,7 +57,7 @@
 String.prototype.replaceArray = function(find, replace) {
   var str = this;
   for (var i = 0; i < find.length; i++) {
-    str = str.replace(new RegExp("\\b" + find[i] + "\\b", 'i'), replace[i]);
+    str = str.replace(new RegExp("\\b" + find[i] + "\\b", 'ig'), replace[i]);
   }
   return str.substring(2, str.length);
 }
